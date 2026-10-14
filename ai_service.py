@@ -4,12 +4,15 @@ from openai import OpenAI
 
 load_dotenv()
 
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(
+    api_key=os.getenv("DEEPSEEK_API_KEY"),
+    base_url="https://api.deepseek.com/beta",
+)
 
 def create_simple_tasks(description):
 
     if not client.api_key:
-        return ["Error: La API key de OpenAI no está configurada."]
+        return ["Error: La API key de DeepSeek no está configurada."]
     
     try:
 
@@ -26,7 +29,7 @@ Formato de respuesta:
 Responde solo con la lista de subtareas, una por línea, empezando cada línea con un guión."""
         
         params = {
-            "model": "gpt-5",
+            "model": "deepseek-flash",
             "messages": [
                 {"role": "system", "content": "Eres un asistente experto en gestión de tareas que ayuda a dividir tareas complejas en pasos simples y accionables."},
                 {"role": "user", "content": prompt}
